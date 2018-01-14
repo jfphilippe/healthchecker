@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -15,17 +14,21 @@ func main() {
 
 	url := "http://127.0.0.1:" + *port + *endpoint
 	if *debug {
-		fmt.Printf("URL : %s\n", url)
+		print("URL : " + url + "\n")
 	}
 	resp, err := http.Get(url) // Note pointer dereference using *
 
 	// If there is an error or non-200 status, exit with 1 signaling unsuccessful check.
-	if err != nil || resp.StatusCode != 200 {
+	if nil != err || 200 != resp.StatusCode {
 		if *debug {
 			if nil != err {
-				fmt.Printf("FAIL Error : %s\n", err)
+				print("FAIL Error : ")
+				print(err.Error())
+				print("\n")
 			} else {
-				fmt.Printf("FAIL StatusCode : %d\n", resp.StatusCode)
+				print("FAIL StatusCode : ")
+				print(resp.StatusCode)
+				print("\n")
 			}
 		}
 		os.Exit(1)
